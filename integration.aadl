@@ -1,0 +1,44 @@
+package integration
+-- This package defines the redundant dispatch of the functions over the 3 CPUs
+-- and checks the redundancy using Resolute
+public
+	with functional, hardware;
+
+	annex Resolute {**
+
+is_function_bound(logical : aadl, physical : component) : bool =
+  has_property(logical, Actual_Function_Binding) and
+  member(physical, property(logical, Actual_Function_Binding))
+  
+get_bound_functions(functions : {component}, cpu : component) : {component} =
+  {type(f) for (f : functions) | is_function_bound(f, cpu)}
+
+functions_are_redundant(functions : {component}, cpus : [component]) <=
+  ** "The cpus shall run the same functions" **
+  let funs_cpus : [{component}] = [get_bound_functions(functions, cpu) for (cpu: cpus)];
+  let fs : {{component}} = as_set(funs_cpus);
+  size(fs) = 1
+
+	**};
+
+	system Integration
+	end Integration;
+
+	system implementation Integration.i
+		subcomponents
+			funs: abstract functional::functions.i;
+			board: system hardware::board.i;
+		properties
+				--- allocate functions to HW components
+			Actual_Function_Binding => (
+						reference (board.cpu_1)) applies to funs.fun1_1, funs.fun2_1, funs.fun3_1;
+			Actual_Function_Binding => (
+						reference (board.cpu_2)) applies to funs.fun1_2, funs.fun2_2, funs.fun3_2;
+			Actual_Function_Binding => (
+						reference (board.cpu_3)) applies to funs.fun1_3, funs.fun2_3, funs.fun3_3;
+		annex resolute {**
+            -- The three boards shall run the same functions
+			prove functions_are_redundant(subcomponents(this.funs), [this.board.cpu_1, this.board.cpu_2, this.board.cpu_3])
+	    **};
+	end Integration.i;
+end integration;

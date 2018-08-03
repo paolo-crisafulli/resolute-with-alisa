@@ -1,0 +1,14 @@
+package hardware
+-- This package definies a hardware board with 3 CPUs to hold the functions
+public
+	system Board
+	end Board;
+
+	system implementation Board.i
+		subcomponents
+			cpu_1: system;
+			cpu_2: system;
+			cpu_3: system;
+			some_device: device;
+	end Board.i;
+end hardware;

@@ -1,0 +1,28 @@
+-- This package defines functions types and function instances to be dispatched redundantly on CPUs
+package functional
+public
+	abstract Fun1
+	end Fun1;
+
+	abstract Fun2
+	end Fun2;
+
+	abstract Fun3
+	end Fun3;
+
+	abstract Functions
+	end Functions;
+
+	abstract implementation Functions.i
+		subcomponents
+			fun1_1: abstract Fun1;
+			fun2_1: abstract Fun2;
+			fun3_1: abstract Fun3;
+			fun1_2: abstract Fun1;
+			fun2_2: abstract Fun2;
+			fun3_2: abstract Fun3;
+			fun1_3: abstract Fun1;
+			fun2_3: abstract Fun2;
+			fun3_3: abstract Fun3;
+	end Functions.i;
+end functional;
