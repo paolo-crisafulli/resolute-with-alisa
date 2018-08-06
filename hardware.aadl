@@ -4,11 +4,17 @@ public
 	system Board
 	end Board;
 
+	system CPU
+	end CPU;
+
+	device DEV
+	end DEV;
+
 	system implementation Board.i
 		subcomponents
-			cpu_1: system;
-			cpu_2: system;
-			cpu_3: system;
-			some_device: device;
+			cpu_1: system CPU;
+			cpu_2: system CPU;
+			cpu_3: system CPU;
+			some_device: device DEV;
 	end Board.i;
 end hardware;

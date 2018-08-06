@@ -13,8 +13,10 @@ is_function_bound(logical : aadl, physical : component) : bool =
 get_bound_functions(functions : {component}, cpu : component) : {component} =
   {type(f) for (f : functions) | is_function_bound(f, cpu)}
 
-functions_are_redundant(functions : {component}, cpus : [component]) <=
+functions_are_redundant(self: component) <=
   ** "The cpus shall run the same functions" **
+  let functions: {component} = subcomponents(instance(functional::Functions.i));
+  let cpus: [component] = [c for (c:subcomponents(instance(hardware::Board.i))) | name(c)="cpu_1" or name(c)="cpu_2" or name(c)="cpu_3"];
   let funs_cpus : [{component}] = [get_bound_functions(functions, cpu) for (cpu: cpus)];
   let fs : {{component}} = as_set(funs_cpus);
   size(fs) = 1
@@ -38,7 +40,7 @@ functions_are_redundant(functions : {component}, cpus : [component]) <=
 						reference (board.cpu_3)) applies to funs.fun1_3, funs.fun2_3, funs.fun3_3;
 		annex resolute {**
             -- The three boards shall run the same functions
-			prove functions_are_redundant(subcomponents(this.funs), [this.board.cpu_1, this.board.cpu_2, this.board.cpu_3])
+			prove functions_are_redundant(this)
 	    **};
 	end Integration.i;
 end integration;
