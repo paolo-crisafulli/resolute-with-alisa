@@ -1,0 +1,8 @@
+verification methods Resolute [
+
+	method allFunctionsRedounded(): "Functions shall be redounded" [
+		description "Check that all functions running on the CCP2 are the same"
+		resolute integration.integration_public.Resolute.Resolute.functions_are_redundant
+	]
+
+]

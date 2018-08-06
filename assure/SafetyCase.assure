@@ -1,0 +1,43 @@
+case SafetyCase [
+	successcount 1
+	model SafetyCase.SafetyPlan for integration::Integration.i [
+		successcount 1
+		claim safety_vplan # R1 [
+			successcount 1
+			verification safety_vplan # R1 # redundancy [
+				executionstate completed resultstate success successcount 1
+				message "The cpus shall run the same functions"
+			]
+		]
+		subsystem funs [
+			subsystem fun1_1 [
+			]
+			subsystem fun2_1 [
+			]
+			subsystem fun3_1 [
+			]
+			subsystem fun1_2 [
+			]
+			subsystem fun2_2 [
+			]
+			subsystem fun3_2 [
+			]
+			subsystem fun1_3 [
+			]
+			subsystem fun2_3 [
+			]
+			subsystem fun3_3 [
+			]
+		]
+		subsystem board [
+			subsystem some_device [
+			]
+			subsystem cpu_1 [
+			]
+			subsystem cpu_2 [
+			]
+			subsystem cpu_3 [
+			]
+		]
+	]
+]

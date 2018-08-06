@@ -1,0 +1,4 @@
+system requirements safety_reqs for integration::Integration.i [ 
+    requirement R1 : "All cpus shall hold the same functions" [
+    ]
+]

@@ -1,0 +1,9 @@
+
+assurance case SafetyCase for integration::Integration [
+	
+	assurance plan SafetyPlan for integration::Integration.i [
+		description "Assurance plan for safety"
+		assure subsystem all
+		assure safety_vplan
+	]
+]

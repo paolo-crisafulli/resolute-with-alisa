@@ -1,0 +1,6 @@
+verification plan safety_vplan for safety_reqs [
+	claim R1 [
+		activities
+		redundancy : Resolute.allFunctionsRedounded ( )
+	]
+] 
