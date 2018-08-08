@@ -1,0 +1,6 @@
+verification plan consistency_vplan for consistency_reqs [
+	claim R1 [
+		activities
+		consistency : Resolute.same_cpus ( )
+	]
+] 

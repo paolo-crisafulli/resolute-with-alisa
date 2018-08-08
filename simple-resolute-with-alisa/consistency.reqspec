@@ -1,0 +1,4 @@
+system requirements consistency_reqs for integration::Integration.i [ 
+    requirement R1 : "All cpus shall be of same type" [
+    ]
+]

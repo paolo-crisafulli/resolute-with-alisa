@@ -1,0 +1,9 @@
+
+assurance case ConsistencyCase for integration::Integration [
+	
+	assurance plan ConsistencyPlan for integration::Integration.i [
+		description "Check same CPUs"
+		assure subsystem all
+		assure consistency_vplan
+	]
+]

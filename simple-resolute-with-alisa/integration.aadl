@@ -1,0 +1,63 @@
+package integration
+public
+	annex Resolute {**
+	    -- claim function using standalone Resolute
+		cpus_are_of_same_type(cpu1: component, cpu2: component) <=
+		** "CPUs shall be of same type" **
+		type(cpu1) = type(cpu2)
+
+		-- same claim using Alisa Resolute function
+        accessor(c: component, cname: string): component =
+        head(as_list({c1 for (c1: subcomponents(c)) | name(c1)=cname}))
+
+		cpus_are_of_same_type_alisa(integration: component) <=
+		** "In the integrated system, CPUs shall be of same type"**
+		let cpu1: component = accessor(accessor(accessor(integration, "hw1"), "board"), "cpu");
+		let cpu2: component = accessor(accessor(accessor(integration, "hw2"), "board"), "cpu");
+		cpus_are_of_same_type(cpu1, cpu2)
+		
+	**};
+
+	system CPU
+	end CPU;
+
+	system Board
+	end Board;
+
+	system implementation Board.i1
+		subcomponents
+			cpu: system CPU;
+	end Board.i1;
+
+	system implementation Board.i2
+		subcomponents
+			cpu: system CPU;
+	end Board.i2;
+
+	system Hardware
+	end Hardware;
+
+	system implementation Hardware.i1
+		subcomponents
+			board: system Board.i1;
+	end Hardware.i1;
+
+	system implementation Hardware.i2
+		subcomponents
+			board: system Board.i2;
+	end Hardware.i2;
+
+	system Integration
+	end Integration;
+
+	system implementation Integration.i
+		subcomponents
+			hw1: system Hardware.i1;
+			hw2: system Hardware.i2;
+		annex resolute {**
+            -- CPUs shall be of same type
+			prove cpus_are_of_same_type(this.hw1.board.cpu, this.hw2.board.cpu)
+			prove cpus_are_of_same_type_alisa(this)
+	    **};
+	end Integration.i;
+end integration;
